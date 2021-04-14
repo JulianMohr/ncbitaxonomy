@@ -1,0 +1,90 @@
+include:
+    - project: "epi2melabs/ci-templates"
+      file: "push-github.yaml"
+    - project: "epi2melabs/ci-templates"
+      file: "push-conda.yaml"
+
+image: ${UBUNTUIMAGE}:18.04
+
+stages:
+    - test
+    - build
+    - prerelease
+    - release
+    - postrelease
+
+# Insist that the version in __init__.py matches the git tag
+.check-versions: &check-versions |
+    PYVER="v"$(grep "__version__ = " ${CI_PROJECT_NAME}/__init__.py | awk '{gsub("\"","",$3); print $3}')
+    TAGVER=${CI_COMMIT_TAG}
+    if [[ "${PYVER}" != "${TAGVER}" ]]; then
+        echo "Mismatching TAG and PACKAGE versions:"
+        echo " -     TAG:'$TAGVER'"
+        echo " - PACKAGE:'$TAGVER'"
+        exit 1
+    else
+        echo "TAG and PACKAGE versions agree: '${PYVER}'"
+    fi
+
+# Insist a CHANGELOG entry has been made for tags
+.check-changelog: &check-changelog |
+    TAGVER=${CI_COMMIT_TAG}
+    MATCHES=$(grep -c "## \[${TAGVER}\]" CHANGELOG.md || exit 0)
+    if [[ "${MATCHES}" != "1" ]]; then
+        echo "Expected one match to '${CI_COMMIT_TAG}' in CHANGELOG, found ${MATCHES}"
+        exit 1
+    else
+        echo "Found CHANGELOG.md entry for tag"
+    fi
+
+test:
+    stage: test
+    before_script:
+        - apt-get update -qq && apt-get install -y -qq
+          python3-all-dev python-virtualenv
+    script:
+        - make test
+        - make docs
+        - make sdist
+    artifacts:
+        paths:
+            - dist/*.tar.gz
+
+.release-stub:
+    only:
+        - /^v[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+$/
+    except:
+        - branches
+
+deploy-checks:
+    extends: .release-stub
+    stage: prerelease
+    script:
+        - *check-versions
+        - *check-changelog
+
+deploy:pypi:
+    extends: .release-stub
+    stage: release
+    before_script:
+        - apt-get update -qq && apt-get install -y -qq
+          python3-all-dev python-virtualenv
+    script:
+        - make pypi_build/bin/activate
+        - source pypi_build/bin/activate
+        - twine upload --non-interactive dist/*.tar.gz
+
+conda:
+    extends:
+        - .deploy-conda
+        - .release-stub
+    before_script:
+        - export CONDA_PKG=${CI_PROJECT_NAME}
+        - export CONDA_PKG_VERSION=${CI_COMMIT_TAG/v/}
+        - cd conda
+
+
+deploy:trigger:
+    extends: .release-stub
+    stage: postrelease
+    trigger: epi2melabs/nanolabs
