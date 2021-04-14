@@ -1,0 +1,40 @@
+
+# this doesn't work
+# {% set data = load_setup_py_data() %}
+
+package:
+  name: {{ environ.get('CONDA_PKG') }}
+  version: {{ environ.get('CONDA_PKG_VERSION') }}
+
+source:
+    path: ../
+
+build:
+  number: 0
+  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv"
+  noarch: python
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    -
+
+test:
+  imports:
+    - ncbitax
+
+about:
+  home: "https://github.com/epi2me-labs/aplanat"
+  license: Mozilla Public License 2.0
+  license_family: OTHER
+  license_file: LICENSE.md
+  summary: "Bokeh plotting API, with bio-focussed extras."
+  doc_url: https://github.com/epi2me-labs/ncbitax
+  dev_url: https://github.com/epi2me-labs/ncbitax
+
+extra:
+  recipe-maintainers:
+    - cjw85
+
