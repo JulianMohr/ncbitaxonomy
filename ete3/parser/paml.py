@@ -1,6 +1,3 @@
-# TODO: remove six and python2 compatibility / unnecessary imports
-from __future__ import absolute_import
-from __future__ import print_function
 # #START_LICENSE###########################################################
 #
 #
@@ -42,11 +39,8 @@ from __future__ import print_function
 
 
 import os
-import string
 from sys import stderr as STDERR
 from re import search
-from six.moves import map
-from six.moves import range
 
 def read_paml (source, obj=None, header_delimiter="\t", fix_duplicates=True):
     """ Reads a collection of sequences econded in PAML format... that is, something between PHYLIP and fasta

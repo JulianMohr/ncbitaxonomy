@@ -36,11 +36,6 @@
 #
 #
 # #END_LICENSE#############################################################
-from __future__ import absolute_import
-from __future__ import print_function
-
-# TODO remove python2 compatibility
-
 import random
 import copy
 import itertools
@@ -48,8 +43,7 @@ from collections import deque
 from hashlib import md5
 from functools import cmp_to_key
 
-import six
-from six.moves import (cPickle, map, range, zip)
+import pickle
 
 from ..parser.newick import read_newick, write_newick
 from .. import utils
@@ -282,7 +276,7 @@ class TreeNode(object):
     def add_features(self, **features):
         """
         Add or update several features. """
-        for fname, fvalue in six.iteritems(features):
+        for fname, fvalue in features.items():
             setattr(self, fname, fvalue)
             self.features.add(fname)
 
@@ -539,7 +533,7 @@ class TreeNode(object):
         # their path to the common ancestor.
         n2count = {}
         n2depth = {}
-        for seed, path in six.iteritems(node2path):
+        for seed, path in node2path.items():
             for visited_node in path:
                 if visited_node not in n2depth:
                     depth = visited_node.get_distance(start, topology_only=True)
@@ -550,13 +544,13 @@ class TreeNode(object):
         # if several internal nodes are in the path of exactly the same kept
         # nodes, only one (the deepest) should be maintain.
         visitors2nodes = {}
-        for node, visitors in six.iteritems(n2count):
+        for node, visitors in n2count.items():
             # keep nodes connection at least two other nodes
             if len(visitors)>1:
                 visitor_key = frozenset(visitors)
                 visitors2nodes.setdefault(visitor_key, set()).add(node)
 
-        for visitors, nodes in six.iteritems(visitors2nodes):
+        for visitors, nodes in visitors2nodes.items():
             if not (to_keep & nodes):
                 sorted_nodes = sorted(nodes, key=cmp_to_key(cmp_nodes))
                 to_keep.add(sorted_nodes[0])
@@ -919,7 +913,7 @@ class TreeNode(object):
         common = None
         for n in reference:
             broken = False
-            for node, path in six.iteritems(n2path):
+            for node, path in n2path.items():
                 if node is not ref_node and n not in path:
                     broken = True
                     break
@@ -945,7 +939,7 @@ class TreeNode(object):
 
         for n in self.traverse():
             conditions_passed = 0
-            for key, value in six.iteritems(conditions):
+            for key, value in conditions.items():
                 if hasattr(n, key) and getattr(n, key) == value:
                     conditions_passed +=1
             if conditions_passed == len(conditions):
@@ -1440,7 +1434,8 @@ class TreeNode(object):
         elif method == "cpickle":
             parent = self.up
             self.up = None
-            new_node = six.moves.cPickle.loads(six.moves.cPickle.dumps(self, 2))
+            # new_node = six.moves.cPickle.loads(six.moves.cPickle.dumps(self, 2))
+            new_node = pickle.loads(pickle.dumps(self, 2))
             self.up = parent
         else:
             raise TreeError("Invalid copy method")
@@ -1605,7 +1600,7 @@ class TreeNode(object):
             if store_attr is None:
                 _val = [_n]
             else:
-                if not isinstance(store_attr, six.string_types):
+                if not isinstance(store_attr, str):
                     _val = [tuple(getattr(_n, attr, None) for attr in store_attr)]
 
                 else:
@@ -1729,18 +1724,18 @@ class TreeNode(object):
                 edges1 = set([
                         tuple(sorted([tuple(sorted([getattr(n, attr_t1) for n in content if hasattr(n, attr_t1) and getattr(n, attr_t1) in common_attrs])),
                                       tuple(sorted([getattr(n, attr_t1) for n in t1_leaves-content if hasattr(n, attr_t1) and getattr(n, attr_t1) in common_attrs]))]))
-                        for content in six.itervalues(t1_content)])
+                        for content in t1_content.values()])
                 edges1.discard(((),()))
             else:
                 edges1 = set([
                         tuple(sorted([getattr(n, attr_t1) for n in content if hasattr(n, attr_t1) and getattr(n, attr_t1) in common_attrs]))
-                        for content in six.itervalues(t1_content)])
+                        for content in t1_content.values()])
                 edges1.discard(())
 
             if min_support_t1:
                 support_t1 = dict([
                         (tuple(sorted([getattr(n, attr_t1) for n in content if hasattr(n, attr_t1) and getattr(n, attr_t1) in common_attrs])), branch.support)
-                        for branch, content in six.iteritems(t1_content)])
+                        for branch, content in t1_content.items(t1_content)])
 
             for t2 in target_trees:
                 t2_content = t2.get_cached_content()
@@ -1750,18 +1745,18 @@ class TreeNode(object):
                             tuple(sorted([
                                         tuple(sorted([getattr(n, attr_t2) for n in content if hasattr(n, attr_t2) and getattr(n, attr_t2) in common_attrs])),
                                         tuple(sorted([getattr(n, attr_t2) for n in t2_leaves-content if hasattr(n, attr_t2) and getattr(n, attr_t2) in common_attrs]))]))
-                            for content in six.itervalues(t2_content)])
+                            for content in t2_content.values()])
                     edges2.discard(((),()))
                 else:
                     edges2 = set([
                             tuple(sorted([getattr(n, attr_t2) for n in content if hasattr(n, attr_t2) and getattr(n, attr_t2) in common_attrs]))
-                            for content in six.itervalues(t2_content)])
+                            for content in t2_content.values()])
                     edges2.discard(())
 
                 if min_support_t2:
                     support_t2 = dict([
                         (tuple(sorted(([getattr(n, attr_t2) for n in content if hasattr(n, attr_t2) and getattr(n, attr_t2) in common_attrs]))), branch.support)
-                        for branch, content in six.iteritems(t2_content)])
+                        for branch, content in t2_content.items()])
 
 
                 # if a support value is passed as a constraint, discard lowly supported branches from the analysis
@@ -2000,7 +1995,7 @@ class TreeNode(object):
         if not cached_content:
             cached_content = self.get_cached_content()
         all_leaves = cached_content[self]
-        for n, side1 in six.iteritems(cached_content):
+        for n, side1 in cached_content.items():
             yield (side1, all_leaves-side1)
 
     def get_edges(self, cached_content = None):
@@ -2600,7 +2595,7 @@ def _translate_nodes(root, *nodes):
                     name2node[n.name] = n
 
     if None in list(name2node.values()):
-        notfound = [key for key, value in six.iteritems(name2node) if value is None]
+        notfound = [key for key, value in name2node.items() if value is None]
         raise ValueError("Node names not found: "+str(notfound))
 
     valid_nodes = []

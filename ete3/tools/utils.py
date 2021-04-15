@@ -1,5 +1,5 @@
-# TODO: add re import
 import os
+import re
 
 # CONVERT shell colors to the same curses palette
 COLORS = {
