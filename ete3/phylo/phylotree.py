@@ -43,13 +43,7 @@ This module defines the PhyloNode dataytype to manage phylogenetic
 trees. It inheritates the coretype TreeNode and add some special
 features to the the node instances.
 """
-from __future__ import absolute_import
-from __future__ import print_function
-
-# TODO: unnecessary import
-
 import sys
-import os
 import re
 import itertools
 from collections import defaultdict

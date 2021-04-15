@@ -36,12 +36,8 @@
 #
 #
 # #END_LICENSE#############################################################
-from __future__ import absolute_import
-from __future__ import print_function
 import re
 import os
-import six
-from six.moves import map
 
 __all__ = ["read_newick", "write_newick", "print_supported_formats"]
 
@@ -230,7 +226,7 @@ def read_newick(newick, root_node=None, format=0, quoted_names=False):
         from ..coretype.tree import TreeNode
         root_node = TreeNode()
 
-    if isinstance(newick, six.string_types):
+    if isinstance(newick, str):
 
         # try to determine whether the file exists.
         # For very large trees, if newick contains the content of the tree, rather than a file name,
@@ -494,7 +490,7 @@ def _get_features_string(self, features=None):
             if type(raw) in ITERABLE_TYPES:
                 raw = '|'.join(map(str, raw))
             elif type(raw) == dict:
-                raw = '|'.join(map(lambda x,y: "%s-%s" %(x, y), six.iteritems(raw)))
+                raw = '|'.join(map(lambda x,y: "%s-%s" %(x, y), raw.items()))
             elif type(raw) == str:
                 pass
             else:

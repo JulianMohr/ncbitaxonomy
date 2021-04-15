@@ -1,5 +1,3 @@
-# TODO: remove six
-# TODO: remove unnecessary imports
 # #START_LICENSE###########################################################
 #
 #
@@ -38,14 +36,9 @@
 #
 #
 # #END_LICENSE#############################################################
-from __future__ import absolute_import
-from __future__ import print_function
-
 import os
-import string
 import textwrap
 from sys import stderr as STDERR
-from six.moves import map
 
 def read_fasta(source, obj=None, header_delimiter="\t", fix_duplicates=True):
     """ Reads a collection of sequences econded in FASTA format."""
