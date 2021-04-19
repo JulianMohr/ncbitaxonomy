@@ -23,16 +23,16 @@ requirements:
 
 test:
   imports:
-    - ncbitax
+    - ncbitaxonomy
 
 about:
   home: "https://github.com/epi2me-labs/aplanat"
   license: Mozilla Public License 2.0
   license_family: OTHER
   license_file: LICENSE.md
-  summary: "Bokeh plotting API, with bio-focussed extras."
-  doc_url: https://github.com/epi2me-labs/ncbitax
-  dev_url: https://github.com/epi2me-labs/ncbitax
+  summary: "Cut down version of ETE3 ncbi_taxonomy for epi2melabs."
+  doc_url: https://github.com/epi2me-labs/ncbitaxonomy
+  dev_url: https://github.com/epi2me-labs/ncbitaxonomy
 
 extra:
   recipe-maintainers:
