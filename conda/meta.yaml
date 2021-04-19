@@ -18,17 +18,14 @@ requirements:
   host:
     - pip
     - python
+    - numpy
   run:
-    -
-
-test:
-  imports:
-    - ncbitaxonomy
+    - python
+    - numpy
 
 about:
-  home: "https://github.com/epi2me-labs/aplanat"
-  license: Mozilla Public License 2.0
-  license_family: OTHER
+  home: "https://github.com/epi2me-labs/ncbitaxonomy"
+  license: GPL3
   license_file: LICENSE.md
   summary: "Cut down version of ETE3 ncbi_taxonomy for epi2melabs."
   doc_url: https://github.com/epi2me-labs/ncbitaxonomy
