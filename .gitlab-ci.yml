@@ -20,7 +20,7 @@ stages:
     if [[ "${PYVER}" != "${TAGVER}" ]]; then
         echo "Mismatching TAG and PACKAGE versions:"
         echo " -     TAG:'$TAGVER'"
-        echo " - PACKAGE:'$TAGVER'"
+        echo " - PACKAGE:'$PYVER'"
         exit 1
     else
         echo "TAG and PACKAGE versions agree: '${PYVER}'"
