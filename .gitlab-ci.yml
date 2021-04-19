@@ -19,8 +19,8 @@ stages:
     TAGVER=${CI_COMMIT_TAG}
     if [[ "${PYVER}" != "${TAGVER}" ]]; then
         echo "Mismatching TAG and PACKAGE versions:"
-        echo " -     TAG:'$TAGVER'"
-        echo " - PACKAGE:'$PYVER'"
+        echo " -     TAG:'${TAGVER}'"
+        echo " - PACKAGE:'${PYVER}'"
         exit 1
     else
         echo "TAG and PACKAGE versions agree: '${PYVER}'"
