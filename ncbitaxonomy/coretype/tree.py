@@ -2613,5 +2613,5 @@ def _translate_nodes(root, *nodes):
         return valid_nodes
 
 # Alias
-#: .. currentmodule:: ete3
+#: .. currentmodule:: ncbitaxonomy
 Tree = TreeNode

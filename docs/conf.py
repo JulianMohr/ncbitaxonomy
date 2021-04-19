@@ -13,7 +13,7 @@ import sphinx_rtd_theme
 
 
 # General information about the project.
-__pkg_name__ = u'ete3'
+__pkg_name__ = u'ncbitaxonomy'
 project = __pkg_name__.capitalize()
 copyright = u'2021, Oxford Nanopore Technologies'
 
