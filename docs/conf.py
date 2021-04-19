@@ -58,7 +58,7 @@ if subprocess.call(['sphinx-apidoc', '-o', './', "../{}".format(__pkg_name__)]) 
 
 # Get the version number from __init__.py
 verstrline = open(os.path.join('..', __pkg_name__, '__init__.py'), 'r').read()
-vsre = r"^__version__ = ['\"]([^'\"]*)['\"]"
+vsre = r"^__version__ = [\"|\'][0-9]+.[0-9]+.[0-9A-Aa-z]+[\"|\']"
 mo = re.search(vsre, verstrline, re.M)
 if mo:
     __version__ = mo.group(1)
