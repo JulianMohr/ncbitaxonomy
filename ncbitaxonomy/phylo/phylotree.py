@@ -307,7 +307,7 @@ def get_subparts(n):
 
 class PhyloNode(TreeNode):
     """
-    .. currentmodule:: ete3
+    .. currentmodule:: ncbitaxonomy
     Extends the standard :class:`TreeNode` instance. It adds
     specific attributes and methods to work with phylogentic trees.
 
@@ -368,7 +368,7 @@ class PhyloNode(TreeNode):
     # property that updates the species code every time name is
     # changed
 
-    #: .. currentmodule:: ete3
+    #: .. currentmodule:: ncbitaxonomy
     #:
     #Species code associated to the node. This property can be
     #automatically extracted from the TreeNode.name attribute or
@@ -812,6 +812,6 @@ class PhyloNode(TreeNode):
 
 
 
-#: .. currentmodule:: ete3
+#: .. currentmodule:: ncbitaxonomy
 #
 PhyloTree = PhyloNode

@@ -14,8 +14,8 @@ develop: venv/bin/activate
 
 test: venv/bin/activate
 #   ${IN_VENV} && pip install flake8 flake8-rst-docstrings flake8-docstrings flake8-import-order
-#	${IN_VENV} && flake8 ete3 \
-#		--import-order-style google --application-import-names ete3 \
+#	${IN_VENV} && flake8 ncbitaxonomy \
+#		--import-order-style google --application-import-names ncbitaxonomy \
 #		--statistics
 	# demo should run without error
 	${IN_VENV} && python test.py
