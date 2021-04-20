@@ -1,4 +1,3 @@
-
 # this doesn't work
 # {% set data = load_setup_py_data() %}
 
@@ -10,7 +9,7 @@ source:
     path: ../
 
 build:
-  number: 0
+  number: {{ environ.get('CONDA_PKG_BUILD') }}
   script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv"
   noarch: python
 
