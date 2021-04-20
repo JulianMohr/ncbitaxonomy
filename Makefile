@@ -27,8 +27,10 @@ pypi_build/bin/activate:
 	${IN_BUILD} && pip install --upgrade pip setuptools twine wheel readme_renderer[md] keyrings.alt
 
 .PHONY: sdist
-sdist: pypi_build/bin/activate
+sdist: clean pypi_build/bin/activate
 	${IN_BUILD} && python setup.py sdist
+	${IN_BUILD} && pip install dist/*.tar.gz
+	${IN_BUILD} && python -c "import ncbitaxonomy"
 
 .PHONY: clean
 clean:
