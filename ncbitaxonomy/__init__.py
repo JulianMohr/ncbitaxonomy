@@ -50,4 +50,4 @@ from .coretype.tree import *
 from .coretype.seqgroup import *
 from .phylo.phylotree import *
 
-__version__ = "3.1.2"
+__version__ = "3.1.2-1"
