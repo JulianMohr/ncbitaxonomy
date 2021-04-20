@@ -44,7 +44,6 @@ test:
           python3-all-dev python-virtualenv libsqlite3-dev
     script:
         - make test
-        - make docs
         - make sdist
     artifacts:
         paths:
