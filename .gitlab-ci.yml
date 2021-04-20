@@ -51,7 +51,7 @@ test:
 
 .release-stub:
     only:
-        - /^v[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+$/
+        - /^v[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+-[[:digit:]]+$/
     except:
         - branches
 
