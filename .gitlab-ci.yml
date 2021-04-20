@@ -84,8 +84,9 @@ conda:
         - export CONDA_PKG_BUILD=$(echo $VERSION | cut -f2 -d-)
         - cd conda
 
+# amend the default github push
+push-github-mod:
+    extends:
+        - push-github
+        - .release-stub
 
-deploy:trigger:
-    extends: .release-stub
-    stage: postrelease
-    trigger: epi2melabs/nanolabs
