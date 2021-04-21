@@ -86,7 +86,8 @@ class NCBITaxa(object):
     Provides a local transparent connector to the NCBI taxonomy database.
     """
 
-    def __init__(self, dbfile=None, taxdump_file=None):
+    def __init__(self, dbfile=None, taxdump_file=None, silent=False):
+        self._silent = silent
 
         if not dbfile:
             self.dbfile = DEFAULT_TAXADB
@@ -228,7 +229,7 @@ class NCBITaxa(object):
             if not raw_track:
                 #raw_track = ["1"]
                 raise ValueError("%s taxid not found" %taxid)
-            else:
+            elif not self._silent:
                 warnings.warn("taxid %s was translated into %s" %(taxid, merged_conversion[taxid]))
 
         track = list(map(int, raw_track[0].split(",")))

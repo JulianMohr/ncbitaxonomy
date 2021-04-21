@@ -4,8 +4,12 @@ The format is based on Keep a Changelog,
 and this project adheres to Semantic Versioning.
 
 
+## [v3.1.2-2]
+### Added
+- Option to silence merged/converted taxid warnings
+
 ## [v3.1.2-1]
-## Fixed
+### Fixed
 - Subpackages were missing from distributions
 
 
