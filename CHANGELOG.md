@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 The format is based on Keep a Changelog,
 and this project adheres to Semantic Versioning.
 
+## [v3.1.2-3]
+### Added
+- Creation of `ncbiquery2` which extends the functionality of `ncbiquery`
 
 ## [v3.1.2-2]
 ### Added
