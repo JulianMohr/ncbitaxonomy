@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from . import ncbiquery
 
+__all__ = ["NCBITaxa"]
 
 RANKS = [
     "superkingdom",
