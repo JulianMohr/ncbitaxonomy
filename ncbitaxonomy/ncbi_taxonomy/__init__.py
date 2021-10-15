@@ -37,3 +37,4 @@
 #
 # #END_LICENSE#############################################################
 from .ncbiquery import *
+from .ncbiquery2 import *
